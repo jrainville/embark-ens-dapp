@@ -1,41 +1,62 @@
+// const namehash = require('eth-ens-namehash');
+// const namesConfig = embark.config.namesystemConfig;
+// const registration = namesConfig.register;
+// let rootNode = namehash.hash(registration.rootDomain);
+
 module.exports = {
-  // default applies to all environments
   default: {
-    // Blockchain node to deploy the contracts
     deployment: {
-      host: "localhost", // Host of the blockchain node
-      port: 8545, // Port of the blockchain node
-      type: "rpc" // Type of connection (ws or rpc),
-      // Accounts to use instead of the default account to populate your wallet
-      /*,accounts: [
-        {
-          privateKey: "your_private_key",
-          balance: "5 ether"  // You can set the balance of the account in the dev environment
-                              // Balances are in Wei, but you can specify the unit with its name
-        },
-        {
-          privateKeyFile: "path/to/file" // You can put more than one key, separated by , or ;
-        },
-        {
-          mnemonic: "12 word mnemonic",
-          addressIndex: "0", // Optionnal. The index to start getting the address
-          numAddresses: "1", // Optionnal. The number of addresses to get
-          hdpath: "m/44'/60'/0'/0/" // Optionnal. HD derivation path
-        }
-      ]*/
+      host: "localhost",
+      port: 8545,
+      type: "rpc"
     },
     // order of connections the dapp should connect to
     dappConnection: [
       "$WEB3",  // uses pre existing web3 object if available (e.g in Mist)
-      "ws://localhost:8546",
+      // "ws://localhost:8546",
       "http://localhost:8545"
     ],
     gas: "auto",
     contracts: {
-      // example:
-      //SimpleStorage: {
-      //  args: [ 100 ]
-      //}
+      /*"ENSRegistry": {
+        "deploy": true,
+        "args": []
+      },
+      "FIFSRegistrar": {
+        "deploy": true,
+        "args": ["$ENSRegistry", rootNode],
+        "onDeploy": ["ENSRegistry.methods.setOwner(0, FIFSRegistrar.options.address).send()"]
+      }*/
     }
-  }
+  },
+  /*"ropsten": {
+    "contracts": {
+      "ENSRegistry": {
+        "address": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
+      },
+      "FIFSRegistrar": {
+        "deploy": false
+      }
+    }
+  },
+  "rinkeby": {
+    "contracts": {
+      "ENSRegistry": {
+        "address": "0xe7410170f87102DF0055eB195163A03B7F2Bff4A"
+      },
+      "FIFSRegistrar": {
+        "deploy": false
+      }
+    }
+  },
+  "livenet": {
+    "contracts": {
+      "ENSRegistry": {
+        "address": "0x314159265dd8dbb310642f98f50c066173c1259b"
+      },
+      "FIFSRegistrar": {
+        "deploy": false
+      }
+    }
+  }*/
 };

@@ -1,1 +1,54 @@
-{}
+{
+  "0x2f7195f7dee9b9331e0a0b39f0010b261b47cd09750dc4f7d90343088a1429e7": {
+    "contracts": {
+      "0x30a0593c740a8984dd4353629073df6c2c1d1df6d5ee3a21422d4d347b551ded": {
+        "name": "ENSRegistry",
+        "address": "0x89b2CD16b38eC9AA7d196a40bc3754e8FC16Bc18"
+      },
+      "0x1008a206d39e4370c9130188b21fe2a4ae34843a38264e2063c47ff1527ef533": {
+        "name": "FIFSRegistrar",
+        "address": "0xb8C19C194Ca294B43D8FD488200f5716CF50C23C"
+      },
+      "0xf48cd4ab94c28ee2140c0cac4c3259cc191fc2e2298fa8808ab523d5b8bfdb88": {
+        "name": "FIFSRegistrar",
+        "address": "0xaD08fBDA29B756B282a1d73E3F4077A45631D419"
+      },
+      "0x2020a4b2f17ff2da0a2fc52624d9abe5b75fc4dcc844ed8206ae424d149603c1": {
+        "name": "ENSRegistry",
+        "address": "0x1b2469583Ab6Ed55B95d08eA65171584887080eF"
+      },
+      "0x5a3f62f58c9340b8320b6df645f111eb3b5e1456171d982828176e9f3ddaf07d": {
+        "name": "FIFSRegistrar",
+        "address": "0xFB47dFcd837edF14afF75a779A024b3c9e3A4651"
+      },
+      "0xd4c4a0bf28209d0140667eaa69b41f72e7b65c4f7ee73e87f02b2a683580880c": {
+        "name": "FIFSRegistrar",
+        "address": "0xd24ECa37b823aA1938c0a3ed4b5b56b6Fca389Ba"
+      },
+      "0x8d3695125932c5677bf6535910a83a1ed5b1c7caf024caaec48ca700df0948ad": {
+        "name": "FIFSRegistrar",
+        "address": "0xc8d6b79Cb76E3cAaD28fBdB0F53e4b3f2277a3Ff"
+      },
+      "0x1987fd3108863c8d05da5cb15a63422bec6e13d1f3e9c6dfc13f75eac9118d54": {
+        "name": "FIFSRegistrar",
+        "address": "0xe96Fdb4a708292947F3D7fF27d03fa7049666B85"
+      },
+      "0x00b95d836ea8911dbe2deb9a1805ee6a0a322879fecf17054a0ba3609e524484": {
+        "name": "FIFSRegistrar",
+        "address": "0x9966453D57315a23f5C8a5F724a75F06CBBC15a2"
+      },
+      "0x65fa5cb45fa7e1493fffdb733c53e29f69a89ce3a6bd14115b468d8666fe1a3e": {
+        "name": "FIFSRegistrar",
+        "address": "0x8F2D8b04dD625871d47184Dba19d79f1D906d5D9"
+      },
+      "0x2947706b35fccd3d074b91e0044c566dafda8bcbc3dbe2e8f021950696f57f25": {
+        "name": "FIFSRegistrar",
+        "address": "0xEF8F194b7AEb7B943CE32324e3F337cfC9325b4F"
+      },
+      "0x00a99aa2fbb654bbe8c6ac567149b0f5c38ff96482cf4651eb7987b326f8b599": {
+        "name": "FIFSRegistrar",
+        "address": "0x5467310E4434267FD8BA7ED9a5679b1a71ebc4E4"
+      }
+    }
+  }
+}
