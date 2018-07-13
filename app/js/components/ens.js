@@ -41,30 +41,18 @@ class ENS extends React.Component {
   registerSubDomain(e) {
     e.preventDefault();
     const self = this;
-    function callback(message, isError) {
+    const embarkLogs = this.state.embarkLogs;
+    embarkLogs.push(`EmbarkJS.Names.registerSubDomain('${this.state.valueRegister}', '${this.state.addressRegister}', console.log)`);
+    this.setState({
+      embarkLogs: embarkLogs
+    });
+
+    EmbarkJS.Names.registerSubDomain(this.state.valueRegister, this.state.addressRegister, (err, transaction) => {
+      const message = err ? err : `Successfully registered "${this.state.valueRegister}" with ${transaction.gasUsed} gas`;
       self.setState({
         responseRegister: message,
-        isRegisterError: !!isError
+        isRegisterError: !!err
       });
-    }
-
-    const resolveAddr = this.state.addressRegister || '0x0000000000000000000000000000000000000000';
-    const toSend = FIFSRegistrar.methods.register(web3.utils.sha3(this.state.valueRegister), web3.eth.defaultAccount, resolveAddr);
-
-    toSend.estimateGas().then(gasEstimated => {
-      return toSend.send({ gas: gasEstimated + 1000 }).then(transaction => {
-        if (transaction.status !== "0x1" && transaction.status !== "0x01") {
-          console.warn('Failed transaction', transaction);
-          return callback('Failed to register. Check gas cost.', true);
-        }
-        callback(`Successfully registered "${this.state.valueRegister}" with ${transaction.gasUsed} gas`);
-      }).catch(err => {
-        callback('Failed to register with error: ' + (err.message || err), true);
-        console.error(err);
-      });
-    }).catch(err => {
-      callback("Register would error. Is it already registered? Do you have token balance? Is Allowance set? " + (err.message || err), true);
-      console.error(err);
     });
   }
 
