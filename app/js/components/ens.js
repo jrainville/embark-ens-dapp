@@ -1,8 +1,8 @@
+/*global web3*/
 import EmbarkJS from 'Embark/EmbarkJS';
 import FIFSRegistrar from 'Embark/contracts/FIFSRegistrar';
 import React from 'react';
 import { Alert, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
-const hash = require('eth-ens-namehash').hash;
 
 window.EmbarkJS = EmbarkJS;
 
@@ -19,10 +19,19 @@ class ENS extends React.Component {
       responseLookup: null,
       isLookupError: false,
       valueRegister: '',
+      addressRegister: '',
       responseRegister: null,
       isRegisterError: false,
       embarkLogs: []
     };
+  }
+
+  componentWillMount() {
+    EmbarkJS.onReady(() => {
+      this.setState({
+        addressRegister: web3.eth.defaultAccount
+      })
+    });
   }
 
   handleChange(stateName, e) {
@@ -31,27 +40,31 @@ class ENS extends React.Component {
 
   registerSubDomain(e) {
     e.preventDefault();
-    console.log(this.state.valueRegister, hash(this.state.valueRegister));
-    const toSend = FIFSRegistrar.methods.register(hash(this.state.valueRegister), web3.eth.defaultAccount);
+    const self = this;
+    function callback(message, isError) {
+      self.setState({
+        responseRegister: message,
+        isRegisterError: !!isError
+      });
+    }
+
+    const resolveAddr = this.state.addressRegister || '0x0000000000000000000000000000000000000000';
+    const toSend = FIFSRegistrar.methods.register(web3.utils.sha3(this.state.valueRegister), web3.eth.defaultAccount, resolveAddr);
 
     toSend.estimateGas().then(gasEstimated => {
-      console.log("Register would work. :D Gas estimated: " + gasEstimated);
-      return toSend.send({ gas: gasEstimated + 1000 }).then(txId => {
-        if (txId.status === "0x1" || txId.status === "0x01") {
-          console.log("Register send success. :)");
-        } else {
-          console.log("Register send errored. :( Out of gas? ");
+      return toSend.send({ gas: gasEstimated + 1000 }).then(transaction => {
+        if (transaction.status !== "0x1" && transaction.status !== "0x01") {
+          console.warn('Failed transaction', transaction);
+          return callback('Failed to register. Check gas cost.', true);
         }
-        console.dir(txId)
+        callback(`Successfully registered "${this.state.valueRegister}" with ${transaction.gasUsed} gas`);
       }).catch(err => {
-        console.log("Register send errored. :( Out of gas?");
-        console.dir(err);
-      }).finally(() => {
-        console.log('Go');
+        callback('Failed to register with error: ' + (err.message || err), true);
+        console.error(err);
       });
     }).catch(err => {
-      console.log("Register would error. :/ Already Registered? Have Token Balance? Is Allowance set?");
-      console.dir(err);
+      callback("Register would error. Is it already registered? Do you have token balance? Is Allowance set? " + (err.message || err), true);
+      console.error(err);
     });
   }
 
@@ -131,17 +144,21 @@ class ENS extends React.Component {
           </FormGroup>
         </Form>
 
-        <h3>Register subdomain</h3>
+        <h3>Register subdomain for embark</h3>
         <Form inline>
           <FormGroup>
             {this.state.responseRegister &&
             <Alert className="alert-result" bsStyle={this.state.isRegisterError ? 'danger' : 'success'}>
-              Looked up domain: <span className="value">{this.state.responseRegister}</span>
+              <span className="value">{this.state.responseRegister}</span>
             </Alert>}
             <FormControl
               type="text"
               defaultValue={this.state.valueRegister}
               onChange={(e) => this.handleChange('valueRegister', e)}/>
+            <FormControl
+              type="text"
+              defaultValue={this.state.addressRegister}
+              onChange={(e) => this.handleChange('addressRegister', e)}/>
             <Button bsStyle="primary" onClick={(e) => this.registerSubDomain(e)}>Register subdomain</Button>
           </FormGroup>
         </Form>
