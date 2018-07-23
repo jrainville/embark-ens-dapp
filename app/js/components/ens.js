@@ -1,6 +1,5 @@
 /*global web3*/
 import EmbarkJS from 'Embark/EmbarkJS';
-import FIFSRegistrar from 'Embark/contracts/FIFSRegistrar';
 import React from 'react';
 import { Alert, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 
