@@ -11,10 +11,10 @@ class ENS extends React.Component {
     super(props);
 
     this.state = {
-      valueResolve: 'ethereumfoundation.eth',
+      valueResolve: 'embark.eth',
       responseResolve: null,
       isResolveError: false,
-      valueLookup: '0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
+      valueLookup: '',
       responseLookup: null,
       isLookupError: false,
       valueRegister: '',
@@ -28,7 +28,8 @@ class ENS extends React.Component {
   componentWillMount() {
     EmbarkJS.onReady(() => {
       this.setState({
-        addressRegister: web3.eth.defaultAccount
+        addressRegister: web3.eth.defaultAccount,
+        valueLookup: web3.eth.defaultAccount
       })
     });
   }
@@ -88,7 +89,7 @@ class ENS extends React.Component {
     EmbarkJS.Names.lookup(this.state.valueLookup, (err, result) => {
       if (err) {
         return this.setState({
-          responseLookup: err,
+          responseLookup: err.message || err,
           isLookupError: true
         });
       }
